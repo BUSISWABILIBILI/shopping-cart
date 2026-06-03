@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import { CartProvider, useCart } from "../context/CartContext";
 import Cart from "../pages/Cart";
 
@@ -25,9 +26,11 @@ function CartWithItem() {
 describe("Cart", () => {
   test("shows empty cart message", () => {
     render(
-      <CartProvider>
-        <Cart />
-      </CartProvider>,
+      <MemoryRouter>
+        <CartProvider>
+          <Cart />
+        </CartProvider>
+      </MemoryRouter>,
     );
 
     expect(
@@ -39,9 +42,11 @@ describe("Cart", () => {
     const user = userEvent.setup();
 
     render(
-      <CartProvider>
-        <CartWithItem />
-      </CartProvider>,
+      <MemoryRouter>
+        <CartProvider>
+          <CartWithItem />
+        </CartProvider>
+      </MemoryRouter>,
     );
 
     await user.click(screen.getByText("Add Test Product"));

@@ -32,8 +32,11 @@ export default function Shop() {
   return (
     <main className="shop-page">
       <section className="shop-header">
-        <p>Shop Collection</p>
-        <h1>Choose Your Favourite Products</h1>
+        <div>
+          <p className="shop-eyebrow">Shop Collection</p>
+          <h1>Choose Your Favourite Products</h1>
+        </div>
+        <p className="shop-meta">{products.length} products available</p>
       </section>
 
       <section className="product-grid">

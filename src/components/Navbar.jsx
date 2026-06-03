@@ -8,15 +8,17 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <NavLink to="/" className="logo">
-        BiliStore
+        <span className="logo-mark" aria-hidden="true">
+          B
+        </span>
+        <span>BiliStore</span>
       </NavLink>
 
-      <nav className="nav-links">
+      <nav className="nav-links" aria-label="Main navigation">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/shop">Shop</NavLink>
         <NavLink to="/cart" className="cart-link">
-          Cart
-          <span className="cart-badge">{cartCount}</span>
+          Cart ({cartCount})
         </NavLink>
       </nav>
     </header>

@@ -4,12 +4,27 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: Inter, system-ui, sans-serif;
-  background: #f8fafc;
+html {
+  scroll-behavior: smooth;
 }
 
 button,
 input {
   font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(15, 118, 110, 0.28);
+  outline-offset: 3px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }

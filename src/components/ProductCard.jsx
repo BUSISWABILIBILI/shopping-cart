@@ -27,25 +27,46 @@ export default function ProductCard({ product }) {
 
   return (
     <article className="product-card">
-      <img src={product.image} alt={product.title} />
+      <div className="product-media">
+        <img src={product.image} alt={product.title} loading="lazy" />
+      </div>
 
       <div className="product-card-content">
-        <h3>{product.title}</h3>
-        <p className="product-category">{product.category}</p>
-        <p className="product-price">${product.price.toFixed(2)}</p>
+        <div className="product-card-top">
+          <p className="product-category">{product.category}</p>
+          <p className="product-price">${product.price.toFixed(2)}</p>
+        </div>
 
-        <div className="quantity-controls">
-          <button onClick={decreaseQuantity}>-</button>
+        <h3>{product.title}</h3>
+
+        <div
+          className="quantity-controls"
+          aria-label={`Choose quantity for ${product.title}`}
+        >
+          <button
+            type="button"
+            onClick={decreaseQuantity}
+            aria-label={`Decrease quantity for ${product.title}`}
+          >
+            -
+          </button>
           <input
             type="number"
             min="1"
+            aria-label={`Quantity for ${product.title}`}
             value={quantity}
             onChange={handleQuantityChange}
           />
-          <button onClick={increaseQuantity}>+</button>
+          <button
+            type="button"
+            onClick={increaseQuantity}
+            aria-label={`Increase quantity for ${product.title}`}
+          >
+            +
+          </button>
         </div>
 
-        <button className="add-cart-btn" onClick={handleAddToCart}>
+        <button type="button" className="add-cart-btn" onClick={handleAddToCart}>
           Add To Cart
         </button>
       </div>

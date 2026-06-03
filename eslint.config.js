@@ -17,5 +17,17 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      'react-refresh/only-export-components': [
+        'error',
+        { allowExportNames: ['useCart'] },
+      ],
+    },
+  },
+  {
+    files: ['src/tests/**/*.{js,jsx}', '**/*.test.{js,jsx}'],
+    languageOptions: {
+      globals: globals.vitest,
+    },
   },
 ])

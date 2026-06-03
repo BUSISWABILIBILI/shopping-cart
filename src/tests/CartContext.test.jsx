@@ -27,6 +27,22 @@ function TestComponent() {
 }
 
 describe("CartContext", () => {
+  test("loads cart items saved in localStorage", () => {
+    window.localStorage.setItem(
+      "biliStoreCart",
+      JSON.stringify([{ ...mockProduct, quantity: 3 }]),
+    );
+
+    render(
+      <CartProvider>
+        <TestComponent />
+      </CartProvider>,
+    );
+
+    expect(screen.getByText("Cart Count: 3")).toBeInTheDocument();
+    expect(screen.getByText("Items: 1")).toBeInTheDocument();
+  });
+
   test("adds, updates, and removes cart items", async () => {
     const user = userEvent.setup();
 

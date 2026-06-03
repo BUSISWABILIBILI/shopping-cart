@@ -1,11 +1,21 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import "../styles/Navbar.css";
 
 export default function Navbar() {
+  const { cartCount } = useCart();
+
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/shop">Shop</Link>
-      <Link to="/cart">Cart</Link>
-    </nav>
+    <header className="navbar">
+      <NavLink to="/" className="logo">
+        BiliStore
+      </NavLink>
+
+      <nav className="nav-links">
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/shop">Shop</NavLink>
+        <NavLink to="/cart">Cart ({cartCount})</NavLink>
+      </nav>
+    </header>
   );
 }

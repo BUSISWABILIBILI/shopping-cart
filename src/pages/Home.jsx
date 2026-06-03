@@ -5,12 +5,21 @@ export default function Home() {
   return (
     <main className="home-page">
       <section className="hero">
-        <h1>Welcome to BiliStore</h1>
+        <p className="hero-tag">Modern Shopping Experience</p>
 
-        <p>Discover premium products at unbeatable prices.</p>
+        <h1>
+          Discover Amazing Products
+          <br />
+          At Amazing Prices
+        </h1>
+
+        <p>
+          Shop electronics, fashion, jewellery, and more from our curated
+          collection.
+        </p>
 
         <Link to="/shop" className="shop-btn">
-          Start Shopping
+          Explore Products
         </Link>
       </section>
     </main>

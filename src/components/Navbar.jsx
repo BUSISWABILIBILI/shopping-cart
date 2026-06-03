@@ -14,7 +14,10 @@ export default function Navbar() {
       <nav className="nav-links">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/shop">Shop</NavLink>
-        <NavLink to="/cart">Cart ({cartCount})</NavLink>
+        <NavLink to="/cart" className="cart-link">
+          Cart
+          <span className="cart-badge">{cartCount}</span>
+        </NavLink>
       </nav>
     </header>
   );

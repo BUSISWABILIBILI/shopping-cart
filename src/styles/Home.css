@@ -30,3 +30,10 @@
   border-radius: 12px;
   font-weight: 700;
 }
+
+.hero-tag {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}

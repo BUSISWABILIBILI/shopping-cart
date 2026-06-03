@@ -22,16 +22,6 @@
   background: linear-gradient(90deg, var(--warm), var(--accent), #2a9d8f);
 }
 
-.hero-art {
-  position: absolute;
-  right: clamp(8px, 8vw, 110px);
-  bottom: clamp(18px, 5vw, 54px);
-  width: min(34vw, 330px);
-  min-width: 190px;
-  opacity: 0.42;
-  filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.24));
-}
-
 .hero-content {
   width: min(760px, 100%);
   position: relative;
@@ -134,13 +124,6 @@
 
   .hero-copy {
     font-size: 1rem;
-  }
-
-  .hero-art {
-    right: -26px;
-    bottom: 16px;
-    width: 220px;
-    min-width: 0;
   }
 
   .category-strip {

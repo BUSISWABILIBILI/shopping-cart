@@ -63,5 +63,11 @@ CartProvider.propTypes = {
 };
 
 export function useCart() {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error("useCart must be used inside a CartProvider");
+  }
+
+  return context;
 }

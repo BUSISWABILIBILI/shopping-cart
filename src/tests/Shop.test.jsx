@@ -43,6 +43,7 @@ describe("Shop", () => {
     );
 
     expect(screen.getByText("Loading products...")).toBeInTheDocument();
+    expect(screen.getAllByTestId("product-skeleton")).toHaveLength(8);
 
     await waitFor(() => {
       expect(screen.getByText("Laptop Bag")).toBeInTheDocument();

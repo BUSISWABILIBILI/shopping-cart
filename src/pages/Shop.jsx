@@ -3,11 +3,33 @@ import ProductCard from "../components/ProductCard";
 import { fetchProducts } from "../services/productsApi";
 import "../styles/Shop.css";
 
+const SKELETON_CARD_COUNT = 8;
+
 function formatCategory(category) {
   return category
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+function ProductSkeleton() {
+  return (
+    <article className="product-skeleton" data-testid="product-skeleton">
+      <div className="skeleton-block skeleton-media" />
+      <div className="skeleton-row">
+        <div className="skeleton-block skeleton-pill" />
+        <div className="skeleton-block skeleton-price" />
+      </div>
+      <div className="skeleton-block skeleton-title" />
+      <div className="skeleton-block skeleton-title short" />
+      <div className="skeleton-row controls">
+        <div className="skeleton-block skeleton-stepper" />
+        <div className="skeleton-block skeleton-stepper wide" />
+        <div className="skeleton-block skeleton-stepper" />
+      </div>
+      <div className="skeleton-block skeleton-button" />
+    </article>
+  );
 }
 
 export default function Shop() {
@@ -68,7 +90,40 @@ export default function Shop() {
   }, []);
 
   if (status === "loading") {
-    return <p className="page-message">Loading products...</p>;
+    return (
+      <main className="shop-page" aria-busy="true">
+        <section className="shop-header">
+          <div>
+            <p className="shop-eyebrow">Shop Collection</p>
+            <h1>Choose Your Favourite Products</h1>
+          </div>
+          <p className="shop-meta" role="status">
+            Loading products...
+          </p>
+        </section>
+
+        <section className="shop-controls shop-controls-loading" aria-hidden="true">
+          <div className="shop-control">
+            <div className="skeleton-block skeleton-label" />
+            <div className="skeleton-block skeleton-input" />
+          </div>
+          <div className="shop-control">
+            <div className="skeleton-block skeleton-label" />
+            <div className="skeleton-block skeleton-input" />
+          </div>
+          <div className="shop-control">
+            <div className="skeleton-block skeleton-label" />
+            <div className="skeleton-block skeleton-input" />
+          </div>
+        </section>
+
+        <section className="product-grid" aria-hidden="true">
+          {Array.from({ length: SKELETON_CARD_COUNT }).map((_, index) => (
+            <ProductSkeleton key={index} />
+          ))}
+        </section>
+      </main>
+    );
   }
 
   if (status === "error") {

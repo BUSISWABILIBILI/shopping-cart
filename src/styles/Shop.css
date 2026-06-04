@@ -91,6 +91,111 @@
   gap: 18px;
 }
 
+.product-skeleton {
+  min-height: 423px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skeleton-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e8f0ec;
+}
+
+.skeleton-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.72),
+    rgba(255, 255, 255, 0)
+  );
+  animation: skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+.skeleton-media {
+  height: 188px;
+  background: var(--surface-strong);
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.skeleton-pill {
+  width: 118px;
+  height: 27px;
+  border-radius: 999px;
+}
+
+.skeleton-price {
+  width: 64px;
+  height: 22px;
+}
+
+.skeleton-title {
+  height: 20px;
+}
+
+.skeleton-title.short {
+  width: 72%;
+}
+
+.skeleton-row.controls {
+  margin-top: auto;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.skeleton-stepper {
+  width: 40px;
+  height: 40px;
+}
+
+.skeleton-stepper.wide {
+  width: 64px;
+}
+
+.skeleton-button {
+  height: 44px;
+  background: #d8e3de;
+}
+
+.skeleton-label {
+  width: 86px;
+  height: 14px;
+}
+
+.skeleton-input {
+  height: 44px;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block::after {
+    animation: none;
+  }
+}
+
 .no-products {
   margin-bottom: 28px;
   border: 1px solid var(--border);

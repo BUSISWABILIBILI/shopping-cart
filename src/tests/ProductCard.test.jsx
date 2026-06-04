@@ -34,4 +34,22 @@ describe("ProductCard", () => {
     await user.click(screen.getByText("-"));
     expect(input).toHaveValue(1);
   });
+
+  test("shows feedback after adding a product to the cart", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <CartProvider>
+        <ProductCard product={product} />
+      </CartProvider>,
+    );
+
+    await user.click(screen.getByText("+"));
+    await user.click(screen.getByText("Add To Cart"));
+
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "2 items added to cart",
+    );
+    expect(screen.getByRole("spinbutton")).toHaveValue(1);
+  });
 });

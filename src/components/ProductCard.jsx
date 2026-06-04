@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useCart } from "../context/CartContext";
 import "../styles/ProductCard.css";
 
 export default function ProductCard({ product }) {
   const [quantity, setQuantity] = useState(1);
+  const [feedback, setFeedback] = useState("");
+  const feedbackTimeoutRef = useRef(null);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(feedbackTimeoutRef.current);
+    };
+  }, []);
 
   function decreaseQuantity() {
     setQuantity((current) => Math.max(1, current - 1));
@@ -22,7 +30,14 @@ export default function ProductCard({ product }) {
 
   function handleAddToCart() {
     addToCart(product, quantity);
+    setFeedback(
+      `${quantity} ${quantity === 1 ? "item" : "items"} added to cart`,
+    );
     setQuantity(1);
+    window.clearTimeout(feedbackTimeoutRef.current);
+    feedbackTimeoutRef.current = window.setTimeout(() => {
+      setFeedback("");
+    }, 2200);
   }
 
   return (
@@ -69,6 +84,14 @@ export default function ProductCard({ product }) {
         <button type="button" className="add-cart-btn" onClick={handleAddToCart}>
           Add To Cart
         </button>
+
+        <div className="product-feedback-slot" aria-live="polite">
+          {feedback && (
+            <p className="product-feedback" role="status">
+              {feedback}
+            </p>
+          )}
+        </div>
       </div>
     </article>
   );

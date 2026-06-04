@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CartProvider } from "../context/CartContext";
+import { CurrencyProvider } from "../context/CurrencyContext";
 import ProductCard from "../components/ProductCard";
 
 const product = {
@@ -11,15 +12,21 @@ const product = {
   image: "test.jpg",
 };
 
+function renderProductCard() {
+  render(
+    <CurrencyProvider>
+      <CartProvider>
+        <ProductCard product={product} />
+      </CartProvider>
+    </CurrencyProvider>,
+  );
+}
+
 describe("ProductCard", () => {
   test("renders product details and quantity controls", async () => {
     const user = userEvent.setup();
 
-    render(
-      <CartProvider>
-        <ProductCard product={product} />
-      </CartProvider>,
-    );
+    renderProductCard();
 
     expect(screen.getByText("Test Product")).toBeInTheDocument();
     expect(screen.getByText("electronics")).toBeInTheDocument();
@@ -38,11 +45,7 @@ describe("ProductCard", () => {
   test("shows feedback after adding a product to the cart", async () => {
     const user = userEvent.setup();
 
-    render(
-      <CartProvider>
-        <ProductCard product={product} />
-      </CartProvider>,
-    );
+    renderProductCard();
 
     await user.click(screen.getByText("+"));
     await user.click(screen.getByText("Add To Cart"));

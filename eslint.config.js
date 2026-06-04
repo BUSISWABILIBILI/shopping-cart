@@ -20,7 +20,7 @@ export default defineConfig([
     rules: {
       'react-refresh/only-export-components': [
         'error',
-        { allowExportNames: ['useCart'] },
+        { allowExportNames: ['useCart', 'useCurrency'] },
       ],
     },
   },

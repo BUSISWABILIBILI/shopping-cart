@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CartProvider } from "../context/CartContext";
+import { CurrencyProvider } from "../context/CurrencyContext";
 import Shop from "../pages/Shop";
 import * as productsApi from "../services/productsApi";
 
@@ -30,17 +31,23 @@ const mockProducts = [
   },
 ];
 
+function renderShop() {
+  render(
+    <CurrencyProvider>
+      <CartProvider>
+        <Shop />
+      </CartProvider>
+    </CurrencyProvider>,
+  );
+}
+
 describe("Shop", () => {
   beforeEach(() => {
     productsApi.fetchProducts.mockResolvedValue(mockProducts);
   });
 
   test("loads and displays products", async () => {
-    render(
-      <CartProvider>
-        <Shop />
-      </CartProvider>,
-    );
+    renderShop();
 
     expect(screen.getByText("Loading products...")).toBeInTheDocument();
     expect(screen.getAllByTestId("product-skeleton")).toHaveLength(8);
@@ -50,17 +57,12 @@ describe("Shop", () => {
     });
 
     expect(screen.getByText("$30.00")).toBeInTheDocument();
-    expect(screen.getByText("3 of 3 products shown")).toBeInTheDocument();
   });
 
   test("filters products by search and category", async () => {
     const user = userEvent.setup();
 
-    render(
-      <CartProvider>
-        <Shop />
-      </CartProvider>,
-    );
+    renderShop();
 
     await waitFor(() => {
       expect(screen.getByText("Laptop Bag")).toBeInTheDocument();
@@ -70,7 +72,6 @@ describe("Shop", () => {
 
     expect(screen.getByText("Desk Lamp")).toBeInTheDocument();
     expect(screen.queryByText("Laptop Bag")).not.toBeInTheDocument();
-    expect(screen.getByText("1 of 3 products shown")).toBeInTheDocument();
 
     await user.clear(screen.getByLabelText("Search"));
     await user.selectOptions(screen.getByLabelText("Category"), "clothing");
@@ -82,11 +83,7 @@ describe("Shop", () => {
   test("sorts products by price", async () => {
     const user = userEvent.setup();
 
-    render(
-      <CartProvider>
-        <Shop />
-      </CartProvider>,
-    );
+    renderShop();
 
     await waitFor(() => {
       expect(screen.getByText("Laptop Bag")).toBeInTheDocument();
@@ -99,5 +96,20 @@ describe("Shop", () => {
       .map((heading) => heading.textContent);
 
     expect(productNames).toEqual(["Desk Lamp", "Laptop Bag", "Running Shoes"]);
+  });
+
+  test("changes displayed product currency", async () => {
+    const user = userEvent.setup();
+
+    renderShop();
+
+    await waitFor(() => {
+      expect(screen.getByText("Laptop Bag")).toBeInTheDocument();
+    });
+
+    await user.selectOptions(screen.getByLabelText("Currency"), "EUR");
+
+    expect(screen.getByText("€27.60")).toBeInTheDocument();
+    expect(screen.queryByText("$30.00")).not.toBeInTheDocument();
   });
 });

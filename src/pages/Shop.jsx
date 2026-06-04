@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { useCurrency } from "../context/CurrencyContext";
 import { fetchProducts } from "../services/productsApi";
 import "../styles/Shop.css";
 
@@ -38,6 +39,7 @@ export default function Shop() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOrder, setSortOrder] = useState("featured");
+  const { currency, currencyOptions, setCurrency } = useCurrency();
 
   const categories = useMemo(
     () => [...new Set(products.map((product) => product.category))].sort(),
@@ -115,6 +117,10 @@ export default function Shop() {
             <div className="skeleton-block skeleton-label" />
             <div className="skeleton-block skeleton-input" />
           </div>
+          <div className="shop-control">
+            <div className="skeleton-block skeleton-label" />
+            <div className="skeleton-block skeleton-input" />
+          </div>
         </section>
 
         <section className="product-grid" aria-hidden="true">
@@ -137,9 +143,6 @@ export default function Shop() {
           <p className="shop-eyebrow">Shop Collection</p>
           <h1>Choose Your Favourite Products</h1>
         </div>
-        <p className="shop-meta">
-          {filteredProducts.length} of {products.length} products shown
-        </p>
       </section>
 
       <section className="shop-controls" aria-label="Product filters">
@@ -181,6 +184,21 @@ export default function Shop() {
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
             <option value="name">Name</option>
+          </select>
+        </div>
+
+        <div className="shop-control">
+          <label htmlFor="product-currency">Currency</label>
+          <select
+            id="product-currency"
+            value={currency}
+            onChange={(event) => setCurrency(event.target.value)}
+          >
+            {currencyOptions.map((option) => (
+              <option key={option.code} value={option.code}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
       </section>

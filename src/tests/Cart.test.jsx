@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { CartProvider, useCart } from "../context/CartContext";
+import { CurrencyProvider } from "../context/CurrencyContext";
 import Cart from "../pages/Cart";
 
 const product = {
@@ -23,15 +24,19 @@ function CartWithItem() {
   );
 }
 
+function renderCart(ui) {
+  render(
+    <MemoryRouter>
+      <CurrencyProvider>
+        <CartProvider>{ui}</CartProvider>
+      </CurrencyProvider>
+    </MemoryRouter>,
+  );
+}
+
 describe("Cart", () => {
   test("shows empty cart message", () => {
-    render(
-      <MemoryRouter>
-        <CartProvider>
-          <Cart />
-        </CartProvider>
-      </MemoryRouter>,
-    );
+    renderCart(<Cart />);
 
     expect(
       screen.getByText("Your cart is currently empty."),
@@ -41,13 +46,7 @@ describe("Cart", () => {
   test("displays cart item and updates quantity", async () => {
     const user = userEvent.setup();
 
-    render(
-      <MemoryRouter>
-        <CartProvider>
-          <CartWithItem />
-        </CartProvider>
-      </MemoryRouter>,
-    );
+    renderCart(<CartWithItem />);
 
     await user.click(screen.getByText("Add Test Product"));
 
@@ -57,5 +56,16 @@ describe("Cart", () => {
     await user.click(screen.getByText("+"));
 
     expect(screen.getByText("Total: $75.00")).toBeInTheDocument();
+  });
+
+  test("displays cart totals in the selected currency", async () => {
+    const user = userEvent.setup();
+    window.localStorage.setItem("biliStoreCurrency", "ZAR");
+
+    renderCart(<CartWithItem />);
+
+    await user.click(screen.getByText("Add Test Product"));
+
+    expect(screen.getByText("Total: R925.00")).toBeInTheDocument();
   });
 });

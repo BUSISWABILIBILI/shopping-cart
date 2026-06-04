@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useCart } from "../context/CartContext";
+import { useCurrency } from "../context/CurrencyContext";
 import "../styles/ProductCard.css";
 
 export default function ProductCard({ product }) {
@@ -8,6 +9,7 @@ export default function ProductCard({ product }) {
   const [feedback, setFeedback] = useState("");
   const feedbackTimeoutRef = useRef(null);
   const { addToCart } = useCart();
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     return () => {
@@ -49,7 +51,7 @@ export default function ProductCard({ product }) {
       <div className="product-card-content">
         <div className="product-card-top">
           <p className="product-category">{product.category}</p>
-          <p className="product-price">${product.price.toFixed(2)}</p>
+          <p className="product-price">{formatPrice(product.price)}</p>
         </div>
 
         <h3>{product.title}</h3>

@@ -9,7 +9,26 @@ export default function Navbar() {
     <header className="navbar">
       <NavLink to="/" className="logo">
         <span className="logo-mark" aria-hidden="true">
-          B
+          <svg
+            className="logo-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 6h2l1.6 9.2a2 2 0 0 0 2 1.8h6.8a2 2 0 0 0 2-1.7L20.5 9H8"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M10 20h.01M18 20h.01"
+              stroke="currentColor"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+            />
+          </svg>
         </span>
         <span>BiliStore</span>
       </NavLink>

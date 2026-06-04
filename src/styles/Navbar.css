@@ -33,6 +33,11 @@
   box-shadow: 0 8px 18px rgba(15, 118, 110, 0.22);
 }
 
+.logo-icon {
+  width: 21px;
+  height: 21px;
+}
+
 .nav-links {
   display: flex;
   align-items: center;

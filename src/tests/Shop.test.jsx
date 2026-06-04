@@ -43,6 +43,7 @@ function renderShop() {
 
 describe("Shop", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     productsApi.fetchProducts.mockResolvedValue(mockProducts);
   });
 
@@ -78,6 +79,47 @@ describe("Shop", () => {
 
     expect(screen.getByText("Running Shoes")).toBeInTheDocument();
     expect(screen.queryByText("Desk Lamp")).not.toBeInTheDocument();
+  });
+
+  test("shows an empty result message and clears filters", async () => {
+    const user = userEvent.setup();
+
+    renderShop();
+
+    await waitFor(() => {
+      expect(screen.getByText("Laptop Bag")).toBeInTheDocument();
+    });
+
+    await user.type(screen.getByLabelText("Search"), "watch");
+
+    expect(screen.getByText("No products found")).toBeInTheDocument();
+    expect(screen.getByText("No matches")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Clear Filters" }));
+
+    expect(screen.getByLabelText("Search")).toHaveValue("");
+    expect(screen.getByText("Laptop Bag")).toBeInTheDocument();
+  });
+
+  test("shows an error message and retries loading products", async () => {
+    const user = userEvent.setup();
+    productsApi.fetchProducts.mockRejectedValueOnce(new Error("Network error"));
+
+    renderShop();
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(
+        "We couldn't load the products",
+      );
+    });
+
+    await user.click(screen.getByRole("button", { name: "Try Again" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Laptop Bag")).toBeInTheDocument();
+    });
+
+    expect(productsApi.fetchProducts).toHaveBeenCalledTimes(2);
   });
 
   test("sorts products by price", async () => {

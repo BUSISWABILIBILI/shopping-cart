@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useCurrency } from "../context/CurrencyContext";
 import { fetchProducts } from "../services/productsApi";
@@ -23,13 +23,51 @@ function ProductSkeleton() {
       </div>
       <div className="skeleton-block skeleton-title" />
       <div className="skeleton-block skeleton-title short" />
-      <div className="skeleton-row controls">
-        <div className="skeleton-block skeleton-stepper" />
+      <div className="skeleton-row skeleton-actions">
+        <div className="skeleton-block skeleton-label compact" />
         <div className="skeleton-block skeleton-stepper wide" />
-        <div className="skeleton-block skeleton-stepper" />
       </div>
       <div className="skeleton-block skeleton-button" />
+      <div className="skeleton-block skeleton-feedback" />
     </article>
+  );
+}
+
+function ShopStateIcon({ type }) {
+  if (type === "error") {
+    return (
+      <div className="shop-state-icon error" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 8v5m0 3h.01M10.3 4.9 3.4 17a2 2 0 0 0 1.7 3h13.8a2 2 0 0 0 1.7-3L13.7 4.9a2 2 0 0 0-3.4 0Z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+    );
+  }
+
+  return (
+    <div className="shop-state-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path
+          d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L21 21"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M8.5 10.5h5"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -77,19 +115,33 @@ export default function Shop() {
       });
   }, [products, searchTerm, selectedCategory, sortOrder]);
 
-  useEffect(() => {
-    async function loadProducts() {
-      try {
-        const data = await fetchProducts();
-        setProducts(data);
-        setStatus("success");
-      } catch {
-        setStatus("error");
-      }
-    }
+  const hasActiveFilters =
+    searchTerm.trim() !== "" ||
+    selectedCategory !== "all" ||
+    sortOrder !== "featured";
 
-    loadProducts();
+  function clearFilters() {
+    setSearchTerm("");
+    setSelectedCategory("all");
+    setSortOrder("featured");
+  }
+
+  const loadProducts = useCallback(async () => {
+    setStatus("loading");
+
+    try {
+      const data = await fetchProducts();
+      setProducts(data);
+      setStatus("success");
+    } catch {
+      setProducts([]);
+      setStatus("error");
+    }
   }, []);
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
 
   if (status === "loading") {
     return (
@@ -104,7 +156,10 @@ export default function Shop() {
           </p>
         </section>
 
-        <section className="shop-controls shop-controls-loading" aria-hidden="true">
+        <section
+          className="shop-controls shop-controls-loading"
+          aria-hidden="true"
+        >
           <div className="shop-control">
             <div className="skeleton-block skeleton-label" />
             <div className="skeleton-block skeleton-input" />
@@ -133,7 +188,29 @@ export default function Shop() {
   }
 
   if (status === "error") {
-    return <p className="page-message">Failed to load products.</p>;
+    return (
+      <main className="shop-page">
+        <section className="shop-header">
+          <div>
+            <p className="shop-eyebrow">Shop Collection</p>
+            <h1>Choose Your Favourite Products</h1>
+          </div>
+        </section>
+
+        <section className="shop-state" role="alert">
+          <ShopStateIcon type="error" />
+          <p className="shop-state-kicker">Collection unavailable</p>
+          <h2>We couldn't load the products</h2>
+          <p>
+            The store catalog did not respond. Check your connection and try
+            again.
+          </p>
+          <button type="button" onClick={loadProducts}>
+            Try Again
+          </button>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -204,19 +281,19 @@ export default function Shop() {
       </section>
 
       {filteredProducts.length === 0 && (
-        <section className="no-products" aria-live="polite">
+        <section className="shop-state no-products" aria-live="polite">
+          <ShopStateIcon />
+          <p className="shop-state-kicker">No matches</p>
           <h2>No products found</h2>
-          <p>Try a different search or category.</p>
-          <button
-            type="button"
-            onClick={() => {
-              setSearchTerm("");
-              setSelectedCategory("all");
-              setSortOrder("featured");
-            }}
-          >
-            Clear Filters
-          </button>
+          <p>
+            Try a different search, choose another category, or reset the
+            current filters.
+          </p>
+          {hasActiveFilters && (
+            <button type="button" onClick={clearFilters}>
+              Clear Filters
+            </button>
+          )}
         </section>
       )}
 

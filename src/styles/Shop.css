@@ -89,7 +89,7 @@
 }
 
 .product-skeleton {
-  min-height: 423px;
+  min-height: 446px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
@@ -122,7 +122,7 @@
 }
 
 .skeleton-media {
-  height: 188px;
+  aspect-ratio: 1 / 0.9;
   background: var(--surface-strong);
 }
 
@@ -158,17 +158,21 @@
   gap: 8px;
 }
 
+.skeleton-actions {
+  margin-top: auto;
+}
+
 .skeleton-stepper {
   width: 40px;
   height: 40px;
 }
 
 .skeleton-stepper.wide {
-  width: 64px;
+  width: 140px;
 }
 
 .skeleton-button {
-  height: 44px;
+  height: 48px;
   background: #d8e3de;
 }
 
@@ -177,8 +181,17 @@
   height: 14px;
 }
 
+.skeleton-label.compact {
+  width: 44px;
+}
+
 .skeleton-input {
   height: 44px;
+}
+
+.skeleton-feedback {
+  height: 29px;
+  background: #eef5f1;
 }
 
 @keyframes skeleton-shimmer {
@@ -193,35 +206,74 @@
   }
 }
 
-.no-products {
+.shop-state {
   margin-bottom: 28px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
   box-shadow: var(--shadow-soft);
-  padding: 28px;
+  padding: 34px;
   text-align: center;
 }
 
-.no-products h2 {
+.shop-state-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.shop-state-icon.error {
+  background: #fff1f0;
+  color: var(--danger);
+}
+
+.shop-state-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.shop-state-kicker {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.shop-state h2 {
+  margin-top: 8px;
   font-size: 1.45rem;
   font-weight: 850;
 }
 
-.no-products p {
+.shop-state p:not(.shop-state-kicker) {
+  max-width: 480px;
   margin-top: 8px;
+  margin-right: auto;
+  margin-left: auto;
   color: var(--muted);
+  line-height: 1.6;
 }
 
-.no-products button {
-  min-height: 42px;
-  margin-top: 16px;
+.shop-state button {
+  min-height: 44px;
+  margin-top: 20px;
   border: none;
   border-radius: 8px;
-  background: var(--accent);
+  background: var(--accent-strong);
   color: white;
-  padding: 0 16px;
+  padding: 0 18px;
   font-weight: 850;
+  box-shadow: 0 10px 22px rgba(10, 79, 73, 0.18);
+}
+
+.shop-state button:hover {
+  background: var(--ink);
 }
 
 .page-message {

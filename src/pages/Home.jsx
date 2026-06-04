@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
+import heroImage from "../assets/images/online-clothing-store.png";
 import "../styles/Home.css";
 
 export default function Home() {
   return (
     <main className="home-page">
       <section className="hero" aria-labelledby="home-title">
+        <img
+          className="hero-image"
+          src={heroImage}
+          alt=""
+          aria-hidden="true"
+        />
+
         <div className="hero-content">
           <p className="hero-tag">Curated Everyday Finds</p>
 

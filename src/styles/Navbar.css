@@ -67,7 +67,29 @@
 .nav-links a.cart-link {
   background: var(--ink);
   color: #ffffff;
+  gap: 8px;
   box-shadow: 0 8px 18px rgba(24, 33, 31, 0.16);
+}
+
+.cart-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.cart-badge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--warm);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .nav-links a.cart-link:hover,
@@ -88,6 +110,10 @@
   }
 
   .logo span:last-child {
+    display: none;
+  }
+
+  .cart-label {
     display: none;
   }
 }

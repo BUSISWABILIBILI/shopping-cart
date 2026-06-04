@@ -16,6 +16,9 @@ describe("Navbar", () => {
     expect(screen.getByText("BiliStore")).toBeInTheDocument();
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Shop")).toBeInTheDocument();
-    expect(screen.getByText("Cart (0)")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Cart with 0 items" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("0")).toBeInTheDocument();
   });
 });

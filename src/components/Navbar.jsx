@@ -4,6 +4,7 @@ import "../styles/Navbar.css";
 
 export default function Navbar() {
   const { cartCount } = useCart();
+  const cartLabel = `Cart with ${cartCount} ${cartCount === 1 ? "item" : "items"}`;
 
   return (
     <header className="navbar">
@@ -36,8 +37,31 @@ export default function Navbar() {
       <nav className="nav-links" aria-label="Main navigation">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/shop">Shop</NavLink>
-        <NavLink to="/cart" className="cart-link">
-          Cart ({cartCount})
+        <NavLink to="/cart" className="cart-link" aria-label={cartLabel}>
+          <svg
+            className="cart-icon"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 5h2l1.2 7.4a2 2 0 0 0 2 1.6h4.7a2 2 0 0 0 2-1.6l.8-4.4H7"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9 17h.01M15 17h.01"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span className="cart-label">Cart</span>
+          <span className="cart-badge" aria-hidden="true">
+            {cartCount}
+          </span>
         </NavLink>
       </nav>
     </header>

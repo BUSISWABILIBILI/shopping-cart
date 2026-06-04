@@ -53,6 +53,7 @@
   color: white;
   font-size: 4.25rem;
   font-weight: 850;
+  line-height: 1.04;
   letter-spacing: 0;
 }
 
@@ -192,6 +193,7 @@
   .hero {
     align-items: flex-start;
     min-height: 560px;
+    padding: 44px 20px 54px;
   }
 
   .hero::before {
@@ -203,11 +205,12 @@
   }
 
   .hero h1 {
-    font-size: 2.7rem;
+    font-size: 2.55rem;
   }
 
   .hero-copy {
     font-size: 1rem;
+    line-height: 1.58;
   }
 
   .hero-actions {
@@ -225,6 +228,36 @@
   }
 
   .category-strip {
+    width: min(1180px, calc(100% - 28px));
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 540px;
+    padding: 38px 18px 48px;
+  }
+
+  .hero h1 {
+    font-size: 2.22rem;
+  }
+
+  .hero-copy {
+    margin-top: 18px;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .shop-btn,
+  .cart-btn {
+    width: 100%;
+  }
+
+  .hero-highlights li {
+    min-height: 36px;
   }
 }

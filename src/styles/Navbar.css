@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 14px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -41,6 +42,7 @@
 .nav-links {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 8px;
 }
 
@@ -99,13 +101,17 @@
 }
 
 @media (max-width: 640px) {
+  .navbar {
+    min-height: 68px;
+  }
+
   .nav-links {
     gap: 4px;
   }
 
   .nav-links a {
-    min-height: 38px;
-    padding: 0 9px;
+    min-height: 44px;
+    padding: 0 10px;
     font-size: 0.9rem;
   }
 
@@ -115,5 +121,32 @@
 
   .cart-label {
     display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-links a {
+    padding: 0 7px;
+    font-size: 0.86rem;
+  }
+
+  .nav-links a.cart-link {
+    gap: 6px;
+  }
+
+  .cart-badge {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    font-size: 0.7rem;
   }
 }

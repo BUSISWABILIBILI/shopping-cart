@@ -1,5 +1,6 @@
 .product-card {
   position: relative;
+  min-width: 0;
   min-height: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -145,7 +146,7 @@
 
 .quantity-controls button,
 .quantity-controls input {
-  height: 40px;
+  height: 44px;
   border: none;
   background: transparent;
   color: var(--ink);
@@ -153,7 +154,7 @@
 }
 
 .quantity-controls button {
-  width: 40px;
+  width: 44px;
   transition:
     background 0.2s ease,
     color 0.2s ease;
@@ -165,7 +166,7 @@
 }
 
 .quantity-controls input {
-  width: 58px;
+  width: 62px;
   border-right: 1px solid var(--border);
   border-left: 1px solid var(--border);
   text-align: center;
@@ -210,7 +211,25 @@
 }
 
 @media (max-width: 520px) {
+  .product-card {
+    padding: 10px;
+    gap: 14px;
+  }
+
   .product-media {
     aspect-ratio: 1 / 0.82;
+    padding: 18px;
+  }
+
+  .product-card-content {
+    min-height: auto;
+  }
+
+  .product-card-top {
+    align-items: flex-start;
+  }
+
+  .product-category {
+    max-width: 58%;
   }
 }

@@ -59,15 +59,16 @@
   color: var(--accent-strong);
 }
 
-.cart-link {
+.nav-links a.cart-link {
   background: var(--ink);
-  color: white;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(24, 33, 31, 0.16);
 }
 
 .nav-links a.cart-link:hover,
 .nav-links a.cart-link.active {
   background: var(--accent-strong);
-  color: white;
+  color: #ffffff;
 }
 
 @media (max-width: 640px) {

@@ -119,11 +119,17 @@
 .cart-controls button {
   width: 38px;
   height: 38px;
-  border: 1px solid var(--border);
+  border: 1px solid #b9c8c2;
   border-radius: 8px;
   background: white;
   color: var(--ink);
   font-weight: 900;
+}
+
+.cart-controls button:hover {
+  border-color: var(--accent-strong);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
 }
 
 .cart-controls span {
@@ -139,12 +145,17 @@
 
 .remove-btn {
   width: fit-content;
-  border: 1px solid rgba(180, 35, 24, 0.2);
-  background: rgba(180, 35, 24, 0.08);
-  color: var(--danger);
+  border: 1px solid #b42318;
+  background: #fff1f0;
+  color: #8f1d14;
   padding: 10px 13px;
   border-radius: 8px;
   font-weight: 800;
+}
+
+.remove-btn:hover {
+  background: #b42318;
+  color: #ffffff;
 }
 
 .cart-summary {
@@ -199,15 +210,24 @@
 .checkout-btn {
   width: 100%;
   border: none;
-  background: var(--accent);
-  color: white;
+  background: var(--accent-strong);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(10, 79, 73, 0.2);
 }
 
 .continue-link {
   width: 100%;
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent-strong);
   background: white;
   color: var(--accent-strong);
+}
+
+.checkout-btn:hover {
+  background: var(--ink);
+}
+
+.continue-link:hover {
+  background: var(--accent-soft);
 }
 
 @media (max-width: 768px) {

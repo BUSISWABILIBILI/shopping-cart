@@ -140,19 +140,20 @@
 
 .add-cart-btn {
   min-height: 44px;
-  background: var(--ink);
-  color: white;
+  background: var(--accent-strong);
+  color: #ffffff;
   border: none;
   padding: 0 14px;
   border-radius: 8px;
   font-weight: 800;
+  box-shadow: 0 10px 22px rgba(10, 79, 73, 0.18);
   transition:
     background 0.2s ease,
     transform 0.2s ease;
 }
 
 .add-cart-btn:hover {
-  background: var(--accent-strong);
+  background: var(--ink);
   transform: translateY(-1px);
 }
 

@@ -4,11 +4,11 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 14px;
+  padding: 12px;
   box-shadow: var(--shadow-soft);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -35,19 +35,21 @@
 
 .product-card:hover {
   border-color: rgba(15, 118, 110, 0.32);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow);
 }
 
 .product-media {
-  height: 188px;
+  aspect-ratio: 1 / 0.9;
   border-radius: 8px;
   background-color: var(--surface-strong);
-  background-image: linear-gradient(180deg, rgba(223, 242, 236, 0.88), rgba(255, 255, 255, 0.72));
+  background-image:
+    radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.95), transparent 34%),
+    linear-gradient(180deg, rgba(223, 242, 236, 0.88), rgba(255, 255, 255, 0.72));
   display: grid;
   place-items: center;
   overflow: hidden;
-  padding: 18px;
+  padding: 20px;
 }
 
 .product-media img {
@@ -56,10 +58,15 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.product-card:hover .product-media img {
+  transform: scale(1.04);
 }
 
 .product-card-content {
-  min-height: 192px;
+  min-height: 238px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -73,9 +80,11 @@
 }
 
 .product-card h3 {
-  font-size: 1rem;
+  min-height: 2.8em;
+  font-size: 1.04rem;
+  font-weight: 850;
   color: var(--ink);
-  line-height: 1.35;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -85,10 +94,10 @@
 
 .product-category {
   max-width: 62%;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-  padding: 5px 9px;
+  border-radius: 8px;
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--accent);
+  padding: 6px 9px;
   text-transform: capitalize;
   font-size: 0.76rem;
   font-weight: 800;
@@ -98,25 +107,47 @@
 }
 
 .product-price {
-  font-weight: 700;
-  font-size: 1.05rem;
+  font-weight: 900;
+  font-size: 1.14rem;
   color: var(--ink);
   white-space: nowrap;
 }
 
-.quantity-controls {
+.product-card-actions {
   margin-top: auto;
+  display: grid;
+  gap: 12px;
+}
+
+.quantity-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quantity-label {
+  color: var(--muted-strong);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
 }
 
 .quantity-controls button,
 .quantity-controls input {
   height: 40px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: white;
+  border: none;
+  background: transparent;
   color: var(--ink);
   font-weight: 800;
 }
@@ -124,41 +155,62 @@
 .quantity-controls button {
   width: 40px;
   transition:
-    border-color 0.2s ease,
+    background 0.2s ease,
     color 0.2s ease;
 }
 
 .quantity-controls button:hover {
-  border-color: var(--accent);
+  background: var(--accent-soft);
   color: var(--accent-strong);
 }
 
 .quantity-controls input {
-  width: 64px;
+  width: 58px;
+  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--border);
   text-align: center;
 }
 
 .add-cart-btn {
-  min-height: 44px;
+  min-height: 48px;
   background: var(--accent-strong);
   color: #ffffff;
   border: none;
-  padding: 0 14px;
+  padding: 0 16px;
   border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
   font-weight: 800;
-  box-shadow: 0 10px 22px rgba(10, 79, 73, 0.18);
+  box-shadow: 0 12px 24px rgba(10, 79, 73, 0.2);
   transition:
     background 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .add-cart-btn:hover {
   background: var(--ink);
   transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(24, 33, 31, 0.2);
+}
+
+.add-cart-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.quantity-controls button:focus-visible,
+.quantity-controls input:focus-visible,
+.add-cart-btn:focus-visible {
+  outline: 3px solid rgba(15, 118, 110, 0.28);
+  outline-offset: 2px;
 }
 
 @media (max-width: 520px) {
   .product-media {
-    height: 170px;
+    aspect-ratio: 1 / 0.82;
   }
 }

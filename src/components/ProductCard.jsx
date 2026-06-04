@@ -56,36 +56,65 @@ export default function ProductCard({ product }) {
 
         <h3>{product.title}</h3>
 
-        <div
-          className="quantity-controls"
-          aria-label={`Choose quantity for ${product.title}`}
-        >
+        <div className="product-card-actions">
+          <div className="quantity-row">
+            <span className="quantity-label">Qty</span>
+            <div
+              className="quantity-controls"
+              aria-label={`Choose quantity for ${product.title}`}
+            >
+              <button
+                type="button"
+                onClick={decreaseQuantity}
+                aria-label={`Decrease quantity for ${product.title}`}
+              >
+                -
+              </button>
+              <input
+                type="number"
+                min="1"
+                aria-label={`Quantity for ${product.title}`}
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <button
+                type="button"
+                onClick={increaseQuantity}
+                aria-label={`Increase quantity for ${product.title}`}
+              >
+                +
+              </button>
+            </div>
+          </div>
+
           <button
             type="button"
-            onClick={decreaseQuantity}
-            aria-label={`Decrease quantity for ${product.title}`}
+            className="add-cart-btn"
+            onClick={handleAddToCart}
           >
-            -
-          </button>
-          <input
-            type="number"
-            min="1"
-            aria-label={`Quantity for ${product.title}`}
-            value={quantity}
-            onChange={handleQuantityChange}
-          />
-          <button
-            type="button"
-            onClick={increaseQuantity}
-            aria-label={`Increase quantity for ${product.title}`}
-          >
-            +
+            <svg
+              className="add-cart-icon"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 5h2l1.2 7.4a2 2 0 0 0 2 1.6h4.7a2 2 0 0 0 2-1.6l.8-4.4H7"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M9 17h.01M15 17h.01"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              />
+            </svg>
+            Add To Cart
           </button>
         </div>
-
-        <button type="button" className="add-cart-btn" onClick={handleAddToCart}>
-          Add To Cart
-        </button>
 
         <div className="product-feedback-slot" aria-live="polite">
           {feedback && (

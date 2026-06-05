@@ -140,8 +140,34 @@ export default function Shop() {
   }, []);
 
   useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
+    let isCurrent = true;
+
+    async function loadInitialProducts() {
+      try {
+        const data = await fetchProducts();
+
+        if (!isCurrent) {
+          return;
+        }
+
+        setProducts(data);
+        setStatus("success");
+      } catch {
+        if (!isCurrent) {
+          return;
+        }
+
+        setProducts([]);
+        setStatus("error");
+      }
+    }
+
+    loadInitialProducts();
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
 
   if (status === "loading") {
     return (

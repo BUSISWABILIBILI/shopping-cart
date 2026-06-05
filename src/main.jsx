@@ -6,9 +6,11 @@ import App from "./App";
 import { CartProvider } from "./context/CartContext";
 import { CurrencyProvider } from "./context/CurrencyContext";
 
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <CurrencyProvider>
         <CartProvider>
           <App />

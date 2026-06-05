@@ -36,6 +36,11 @@
   height: 34px;
 }
 
+.cart-success-icon {
+  background: rgba(22, 101, 52, 0.11);
+  color: #166534;
+}
+
 .cart-header {
   margin-bottom: 28px;
   display: flex;

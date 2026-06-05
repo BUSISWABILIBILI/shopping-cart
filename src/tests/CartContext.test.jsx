@@ -11,8 +11,14 @@ const mockProduct = {
 };
 
 function TestComponent() {
-  const { cartItems, cartCount, addToCart, updateQuantity, removeFromCart } =
-    useCart();
+  const {
+    cartItems,
+    cartCount,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+  } = useCart();
 
   return (
     <div>
@@ -22,6 +28,7 @@ function TestComponent() {
       <button onClick={() => addToCart(mockProduct, 2)}>Add Product</button>
       <button onClick={() => updateQuantity(1, 5)}>Update Quantity</button>
       <button onClick={() => removeFromCart(1)}>Remove Product</button>
+      <button onClick={clearCart}>Clear Cart</button>
     </div>
   );
 }
@@ -63,6 +70,23 @@ describe("CartContext", () => {
     expect(screen.getByText("Cart Count: 5")).toBeInTheDocument();
 
     await user.click(screen.getByText("Remove Product"));
+    expect(screen.getByText("Cart Count: 0")).toBeInTheDocument();
+    expect(screen.getByText("Items: 0")).toBeInTheDocument();
+  });
+
+  test("clears all cart items", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <CartProvider>
+        <TestComponent />
+      </CartProvider>,
+    );
+
+    await user.click(screen.getByText("Add Product"));
+    expect(screen.getByText("Cart Count: 2")).toBeInTheDocument();
+
+    await user.click(screen.getByText("Clear Cart"));
     expect(screen.getByText("Cart Count: 0")).toBeInTheDocument();
     expect(screen.getByText("Items: 0")).toBeInTheDocument();
   });

@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useCurrency } from "../context/CurrencyContext";
 import "../styles/Cart.css";
 
 export default function Cart() {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const { formatPrice } = useCurrency();
+  const [checkoutComplete, setCheckoutComplete] = useState(false);
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cartItems.reduce(
@@ -14,6 +16,49 @@ export default function Cart() {
   );
   const total = subtotal;
   const itemLabel = `${itemCount} ${itemCount === 1 ? "item" : "items"}`;
+
+  function handleCheckout() {
+    clearCart();
+    setCheckoutComplete(true);
+  }
+
+  if (checkoutComplete) {
+    return (
+      <main className="cart-page cart-page-empty">
+        <section className="cart-empty-state cart-success-state" role="status">
+          <div className="cart-empty-icon cart-success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="m5 12 4 4L19 6"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <p className="cart-eyebrow">Checkout Complete</p>
+          <h1>Order confirmed</h1>
+          <p>Your cart has been cleared.</p>
+          <p className="empty-cart-copy">
+            Thanks for shopping with BiliStore.
+          </p>
+          <Link to="/shop" className="empty-shop-link">
+            Continue Shopping
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path
+                d="M4 10h11m-4-5 5 5-5 5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+        </section>
+      </main>
+    );
+  }
 
   if (cartItems.length === 0) {
     return (
@@ -151,7 +196,7 @@ export default function Cart() {
             <span>Estimated total</span>
             <h2>Total: {formatPrice(total)}</h2>
           </div>
-          <button type="button" className="checkout-btn">
+          <button type="button" className="checkout-btn" onClick={handleCheckout}>
             Checkout
             <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
               <path

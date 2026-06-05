@@ -58,6 +58,21 @@ describe("Cart", () => {
     expect(screen.getByText("Total: $75.00")).toBeInTheDocument();
   });
 
+  test("completes checkout and clears the cart", async () => {
+    const user = userEvent.setup();
+
+    renderCart(<CartWithItem />);
+
+    await user.click(screen.getByText("Add Test Product"));
+    expect(screen.getByText("Test Product")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /checkout/i }));
+
+    expect(screen.getByText("Order confirmed")).toBeInTheDocument();
+    expect(screen.getByText("Your cart has been cleared.")).toBeInTheDocument();
+    expect(screen.queryByText("Test Product")).not.toBeInTheDocument();
+  });
+
   test("displays cart totals in the selected currency", async () => {
     const user = userEvent.setup();
     window.localStorage.setItem("biliStoreCurrency", "ZAR");
